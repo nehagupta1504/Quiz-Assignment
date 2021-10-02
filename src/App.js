@@ -16,29 +16,32 @@ function QuizPage() {
   const [userAnswer, setUserAnswer] = useState("");
   const [showAnswer, setShowAnswer] = useState("");
   const [start, setStart] = useState(false);
+  const [buttonState, setButtonState] = useState("Next");
   useEffect(async () => {
     const val = await fetchQuestions();
-    console.log(...val);
     setQuestion(...val);
-  }, [questionNo]);
+  }, [, questionNo]);
   const startQuiz = () => {
     setStart(true);
   };
   const handleNext = () => {
-    setQuestionNo((prev) => prev + 1);
-    setShowAnswer("");
-    setUserAnswer("");
-  };
-  const saveAnswer = (e) => {
-    setUserAnswer(e.target.value);
-  };
-  const checkAnswer = () => {
     if (userAnswer.toLowerCase() == question.answer.toLowerCase()) {
       setShowAnswer("Correct Answer");
     } else {
       setShowAnswer(` '${userAnswer}' is an Incorrect Answer`);
     }
+    setButtonState("Loading..");
+    setTimeout(() => {
+      setQuestionNo((prev) => prev + 1);
+      setButtonState("Next");
+      setShowAnswer("");
+      setUserAnswer("");
+    }, 2000);
   };
+  const saveAnswer = (e) => {
+    setUserAnswer(e.target.value);
+  };
+
   return (
     <div className="App">
       {start == false ? (
@@ -67,11 +70,8 @@ function QuizPage() {
               className="input"
               placeholder="Enter your answer.."
             />
-            <button onClick={checkAnswer} className="btn">
-              Check Answer
-            </button>
             <button onClick={handleNext} className="btn">
-              Next
+              {buttonState}
             </button>
             {showAnswer == "Correct Answer" ? (
               <h3 style={{ color: "green" }}>{showAnswer}</h3>
