@@ -49,33 +49,36 @@ function QuizPage() {
           </button>
         </div>
       ) : (
-        <div>
-          <div className="center">
-            <h1>Quiz</h1>
+        <div className="app-inner">
+          <div>
+            <div className="center">
+              <h1>Quiz</h1>
+            </div>
+            <div className="questions">
+              <h3>
+                <span>{questionNo})&nbsp;</span>
+                {question.question}&nbsp;?
+              </h3>
+            </div>
+            <input
+              type="text"
+              onChange={saveAnswer}
+              value={userAnswer}
+              className="input"
+              placeholder="Enter your answer.."
+            />
+            <button onClick={checkAnswer} className="btn">
+              Check Answer
+            </button>
+            <button onClick={handleNext} className="btn">
+              Next
+            </button>
+            {showAnswer == "Correct Answer" ? (
+              <h3 style={{ color: "green" }}>{showAnswer}</h3>
+            ) : (
+              <h3 style={{ color: "red" }}>{showAnswer}</h3>
+            )}
           </div>
-          <div className="questions">
-            <h3>
-              <span>{questionNo})&nbsp;</span>
-              {question.question}&nbsp;?
-            </h3>
-          </div>
-          <input
-            type="text"
-            onChange={saveAnswer}
-            value={userAnswer}
-            className="input"
-          />
-          <button onClick={checkAnswer} className="btn">
-            Check Answer
-          </button>
-          <button onClick={handleNext} className="btn">
-            Next
-          </button>
-          {showAnswer == "Correct Answer" ? (
-            <h3 style={{ color: "green" }}>{showAnswer}</h3>
-          ) : (
-            <h3 style={{ color: "red" }}>{showAnswer}</h3>
-          )}
         </div>
       )}
     </div>
